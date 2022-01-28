@@ -183,3 +183,7 @@ playAgainBtn.addEventListener('click', reset)
 seeAllBtn.addEventListener('click', getAllBots)
 
 getPlayerStats()
+
+module.exports = {
+    drawFive
+}
