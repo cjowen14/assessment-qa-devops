@@ -6,6 +6,17 @@ const {shuffleArray} = require('./utils')
 
 app.use(express.json())
 
+// include and initialize the rollbar library with your access token
+var Rollbar = require('rollbar')
+var rollbar = new Rollbar({
+  accessToken: '1cbc4577170d47c78e6679838a5efd0b',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+})
+
+// record a generic message and send it to Rollbar
+rollbar.log('Hello world!')
+
 
 
 app.get('/', (req, res) => {
@@ -23,6 +34,7 @@ app.get('/styles', (req, res) => {
 
 
 app.get('/api/robots', (req, res) => {
+    rollbar.critical("User tried to see all bots");
     try {
         res.status(200).send(botsArr)
     } catch (error) {
@@ -32,6 +44,7 @@ app.get('/api/robots', (req, res) => {
 })
 
 app.get('/api/robots/five', (req, res) => {
+    rollbar.info('Random bots generated');
     try {
         let shuffled = shuffleArray(bots)
         let choices = shuffled.slice(0, 5)
@@ -44,6 +57,7 @@ app.get('/api/robots/five', (req, res) => {
 })
 
 app.post('/api/duel', (req, res) => {
+    rollbar.info('Duel has begun!');
     try {
         // getting the duos from the front end
         let {compDuo, playerDuo} = req.body
@@ -75,6 +89,7 @@ app.post('/api/duel', (req, res) => {
 })
 
 app.get('/api/player', (req, res) => {
+    rollbar.info('The duel is over and player stats have been displayed');
     try {
         res.status(200).send(playerRecord)
     } catch (error) {
