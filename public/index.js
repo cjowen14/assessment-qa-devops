@@ -184,6 +184,3 @@ seeAllBtn.addEventListener('click', getAllBots)
 
 getPlayerStats()
 
-module.exports = {
-    drawFive
-}
